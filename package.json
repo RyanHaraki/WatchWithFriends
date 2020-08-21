@@ -1,0 +1,16 @@
+{
+  "name": "watch-with-friends",
+  "version": "1.0.0",
+  "description": "A website to watch videos with your friends",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ryan Haraki",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}
