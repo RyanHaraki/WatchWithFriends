@@ -1,15 +1,14 @@
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 /* home page */
-
 
 /* Main section */
 .home {
   text-align: center;
   padding: 2rem;
   height: 80vh;
-  background-image: url('/img/movie.jpg');
+  background-image: url("/img/movie.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -37,15 +36,153 @@ body {
   height: 50vh;
 }
 
+/* footer  */
+
 .footer {
   height: 20vh;
   background: #292b2c;
+  color: white;
+  padding: 30px 30px;
 }
 
+.footer li {
+  list-style: none;
+
+}
 /* join page */
 
 .join {
   height: 80vh;
-  padding-top: 10vh;  
+  padding-top: 10vh;
 }
 
+/* room page  */
+
+.section {
+  height: 75vh;
+}
+
+#mario-chat {
+  max-width: 400px;
+  margin: 105px auto;
+  border: 1px solid #ddd;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+}
+
+#chat-window {
+  height: 50vh;
+  overflow: auto;
+  background: #f9f9f9;
+}
+
+#sentText {
+  padding: 14px 0px;
+  margin: 0 20px;
+  border-bottom: 1px solid #e9e9e9;
+  color: #555;
+}
+
+#sentText p {
+  font-size: 1.1rem;
+  margin-bottom: 0.1px;
+}
+
+#feedback p {
+  color: #aaa;
+  padding: 14px 0px;
+  margin: 0 20px;
+}
+
+#output strong {
+  color: #575ed8;
+}
+
+label {
+  box-sizing: border-box;
+  display: block;
+  padding: 10px 20px;
+}
+
+#mario-chat input {
+  padding: 10px 20px;
+  box-sizing: border-box;
+  background: #eee;
+  border: 0;
+  display: block;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  font-size: 16px;
+}
+
+button {
+  background: #575ed8;
+  color: #fff;
+  font-size: 18px;
+  border: 0;
+  padding: 12px 0;
+  width: 100%;
+  border-radius: 0 0 2px 2px;
+}
+
+#send {
+  background-color: #292b2c;
+}
+
+#video {
+  margin: 30px 30px;
+  border: 1px solid #ddd;
+  height: 62vh;
+  width: 100%;
+}
+
+.main-section h1 {
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+.info {
+  margin: 30px 30px;
+}
+
+.leave {
+  width: 100%;
+}
+
+/* media queries  */
+
+@media only screen and (min-width: 1275px) {
+  #video {
+  }
+}
+
+@media only screen and (max-width: 764px) {
+  .section {
+    height: 1450px;
+  }
+
+  #mario-chat {
+    margin: 0;
+  }
+
+  #chat-window {
+    width: 100vh;
+  }
+
+  #send {
+    width: 100vh;
+  }
+  #mario-chat input {
+    width: 100vh;
+  }
+  #video {
+    width: 764px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .main-section {
+    text-align: center;
+  }
+}

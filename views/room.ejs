@@ -1,0 +1,56 @@
+<%- include('partials/header') %>
+
+<div class="section">
+  <div class="row">
+    <div class="col-md-8 main-section">
+      <h1><span id="name"></span><span id="users"></span></h1>
+      <iframe
+        id="video"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/jD7FnbI76Hg"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <div class="col-md-4">
+      <div id="mario-chat">
+        <a href="/" class="btn btn-primary leave">Leave Room</a>
+        <div id="chat-window">
+          <div id="output"></div>
+          <div id="feedback"></div>
+        </div>
+        <form action="" id="chat-form">
+          <input
+            type="text"
+            id="message"
+            placeholder="Message"
+            required
+            autocomplete="off"
+          />
+          <button id="send" onclick="reload()">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <div class="row">
+    <div class="col-md-8"><h3>Welcome to your room!</h3>
+    <p>To invite a friend, just copy this link:</p>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Url" id="urlInfo">
+        <div class="input-group-append">
+          <button class="btn btn-outline-dark" onclick="copyUrl()">Copy</button>
+        </div>
+      </div>
+</div>
+
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script src="client.js"></script>
+<script src="users.js"></script>
+<%- include('partials/footer') %>
