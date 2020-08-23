@@ -42,6 +42,48 @@ io.on("connection", (socket) => {
     });
   });
 
+  //Listen for new video
+
+  socket.on("newVideo", (newUrl) => {
+    const user = getCurrentUser(socket.id);
+
+    io.to(user.room).emit("newVideo", newUrl);
+
+    io.to(user.room).emit(
+      "message",
+      formatMessage(
+        botName,
+        `${user.username} has played a new video: <a href="${newUrl}">${newUrl}</a>`
+      )
+    );
+  });
+
+  //Listen for pause
+
+  socket.on("pause", (playState) => {
+    const user = getCurrentUser(socket.id);
+    state = 2;
+    console.log(playState);
+    io.to(user.room).emit("pause", state);
+
+    io.to(user.room).emit(
+      "message",
+      formatMessage(botName, `${user.username} has paused the video.`)
+    );
+  });
+  //Listen for play
+  socket.on("play", (playState) => {
+    const user = getCurrentUser(socket.id);
+    state = 1;
+    console.log(playState);
+    io.to(user.room).emit("play", state);
+
+    io.to(user.room).emit(
+      "message",
+      formatMessage(botName, `${user.username} has played the video.`)
+    );
+  });
+
   //Listen for chat message
   socket.on("chatMessage", (msg) => {
     const user = getCurrentUser(socket.id);
@@ -88,6 +130,10 @@ app.get("/create", (req, res) => {
 
 app.get("/room", (req, res) => {
   res.render("room");
+});
+
+app.get("/about", (req, res) => {
+  res.render("about");
 });
 
 server.listen(PORT, () => console.log(`Server hosted on port ${PORT}`));
