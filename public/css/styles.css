@@ -1,5 +1,12 @@
 body {
   font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+/* navbar   */
+
+.nav-link {
+  font-weight: 400;
 }
 
 #paste {
@@ -19,6 +26,7 @@ body {
 
 #welcome {
   color: white;
+  font-weight: 500;
 }
 
 .welcome-home {
@@ -51,14 +59,21 @@ body {
 
 .footer li {
   list-style: none;
-
 }
+
 /* join page */
 
 .join {
   height: 80vh;
   padding-top: 10vh;
+  font-family: "Roboto", sans-serif;
 }
+
+.join h1 {
+  font-weight: 600;
+}
+
+
 
 /* room page  */
 
@@ -66,8 +81,12 @@ body {
   color: #575ed8;
 }
 
+#roomBasic {
+  font-weight: 600;
+}
+
 .section {
-  height: 75vh;
+  height: 80vh;
 }
 
 #mario-chat {
@@ -106,12 +125,6 @@ body {
   color: #575ed8;
 }
 
-label {
-  box-sizing: border-box;
-  display: block;
-  padding: 10px 20px;
-}
-
 #mario-chat input {
   padding: 10px 20px;
   box-sizing: border-box;
@@ -134,7 +147,7 @@ label {
   border-radius: 0 0 2px 2px;
 }
 
-#video {
+#player {
   margin: 30px 30px;
   border: 1px solid #ddd;
   height: 62vh;
@@ -159,6 +172,14 @@ label {
   padding: 12px 0;
   width: 100%;
   border-radius: 0 0 2px 2px;
+}
+
+/* about section  */
+
+.about {
+  height: 80vh;
+  padding-left: 4vh;
+  padding-top: 2vh;
 }
 
 /* media queries  */

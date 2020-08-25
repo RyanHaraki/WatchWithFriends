@@ -3,10 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="css/styles.css" />
-    <script src="js/client.js"></script>
-    <title>WatchWithFriends</title>
+    <title>Room</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -16,20 +22,20 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/create">Create Room</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/join">Join Room</a>
+              <a class="nav-link" href="/about">About</a>
             </li>
             
           </ul>
-            <input id="paste" name="paste" class="form-control mr-sm-2"placeholder="Paste Video URL Here" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Watch</button>
-         
+
+            <input autocomplete="off" id="paste" name="paste" class="form-control mr-sm-2"placeholder="Paste Video URL Here" aria-label="Search">
+            <button id="watch" class="btn btn-outline-success waves-effect" type="submit">Watch</button>
           
         </div>
       </nav>
@@ -37,16 +43,9 @@
 <div class="section">
   <div class="row">
     <div class="col-md-8 main-section">
-      <h1><span id="name"></span><span id="users"></span></h1>
-      <iframe
-        id="video"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/jD7FnbI76Hg"
-        frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
+      <h1 id="roomBasic"><span id="name"></span><span id="users"></span></h1>
+          <div id="player"></div>
+
     </div>
     <div class="col-md-4">
       <div id="mario-chat">
@@ -62,8 +61,9 @@
             placeholder="Message"
             required
             autocomplete="off"
+            class="form-control form-control-lg"
           />
-          <button id="send" onclick="reload()">Send</button>
+          <button class="btn btn-black btn-block" id="send" onclick="reload()">Send</button>
         </form>
       </div>
     </div>
@@ -78,19 +78,18 @@
         just have to replace the name in the "username" field. Ex:
         username=Billy -> username=Ryan. They can also join using the "Join Room" page.
       </p>
+
+      
       <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Url"
-          id="urlInfo"
-        />
+        <input id="urlInfo" type="text" class="form-control" placeholder="Url">
         <div class="input-group-append">
-          <button class="btn btn-outline-dark" onclick="copyUrl()">Copy</button>
+          <button onclick="copyUrl()" class="btn btn-md btn-outline-dark m-0 px-3 py-2 z-depth-0 waves-effect" type="button" id="button-addon2">Copy</button>
         </div>
       </div>
+
       <p>To play a new video, paste the URL into the form in the navigation bar and press watch!</p>
     </div>
+
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js"></script>
