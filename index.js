@@ -2,6 +2,7 @@ const express = require("express");
 const ejs = require("ejs");
 const http = require("http");
 const socket = require("socket.io");
+const { urlencoded } = require("express");
 const formatMessage = require(__dirname + "/public/messages.js");
 const { userJoin, getCurrentUser, userLeft, getRoomUsers } = require(__dirname +
   "/public/users.js");
@@ -18,6 +19,7 @@ io.on("connection", (socket) => {
     const user = userJoin(socket.id, username, roomid);
 
     socket.join(user.room);
+
     //Welcome current users
     socket.emit(
       "message",
@@ -63,26 +65,64 @@ io.on("connection", (socket) => {
   socket.on("pause", (playState) => {
     const user = getCurrentUser(socket.id);
     state = 2;
-    console.log(playState);
     io.to(user.room).emit("pause", state);
 
     io.to(user.room).emit(
       "message",
-      formatMessage(botName, `${user.username} has paused the video.`)
+      formatMessage(botName, `${user.username} has paused the video`)
     );
   });
+
+  //Listen for seek
+
+  socket.on("seek", (seekTime) => {
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit("seek", seekTime);
+
+    let sec_num = parseInt(seekTime, 10);
+    let hours = Math.floor(sec_num / 3600);
+    let minutes = Math.floor((sec_num - hours * 3600) / 60);
+    let seconds = sec_num - hours * 3600 - minutes * 60;
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+    if (seconds < 10) seconds = "0" + seconds;
+
+    io.to(user.room).emit(
+      "message",
+      formatMessage(
+        botName,
+        `${user.username} has skipped to ${
+          hours + ":" + minutes + ":" + seconds
+        }
+        `
+      )
+    );
+  });
+
   //Listen for play
   socket.on("play", (playState) => {
     const user = getCurrentUser(socket.id);
     state = 1;
-    console.log(playState);
     io.to(user.room).emit("play", state);
 
     io.to(user.room).emit(
       "message",
-      formatMessage(botName, `${user.username} has played the video.`)
+      formatMessage(botName, `${user.username} has played the video`)
     );
   });
+
+  //  //Listen for buffer
+  //   socket.on("buffering", (playState) => {
+  //     const user = getCurrentUser(socket.id);
+  //     state = 3;
+  //     console.log(playState);
+  //     io.to(user.room).emit("buffering", state);
+
+  //     io.to(user.room).emit(
+  //       "message",
+  //       formatMessage(botName, `${user.username} is buffering`)
+  //     );
+  //   });
 
   //Listen for chat message
   socket.on("chatMessage", (msg) => {
@@ -120,10 +160,6 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/join", (req, res) => {
-  res.render("join");
-});
-
 app.get("/create", (req, res) => {
   res.render("create");
 });
@@ -134,6 +170,10 @@ app.get("/room", (req, res) => {
 
 app.get("/about", (req, res) => {
   res.render("about");
+});
+
+app.get("/contact", (req, res) => {
+  res.render("contact");
 });
 
 server.listen(PORT, () => console.log(`Server hosted on port ${PORT}`));

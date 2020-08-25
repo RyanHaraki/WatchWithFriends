@@ -29,6 +29,8 @@ socket.on("message", (message) => {
   outPutMessage(message);
 });
 
+//Clear input and play new video when watch button is clicked
+
 watchButton.addEventListener("click", () => {
   watchClick();
 });
@@ -109,7 +111,7 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("player", {
-    videoId: "Rb0UmrCXxVA",
+    videoId: "r_nK51C9Mlw",
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange,
@@ -120,6 +122,32 @@ function onYouTubeIframeAPIReady() {
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
   event.target.playVideo();
+
+  var lastTime = -1;
+  var interval = 1000;
+
+  //Time tracking starts here
+
+  var checkPlayerTime = function () {
+    if (lastTime != -1) {
+      if (player.getPlayerState() == YT.PlayerState.PLAYING) {
+        var t = player.getCurrentTime();
+
+        //console.log(Math.abs(t - lastTime -1));
+
+        ///expecting 1 second interval , with 500 ms margin
+        if (Math.abs(t - lastTime - 1) > 0.5) {
+          // there was a seek occuring
+          console.log("seek"); /// fire your event here !
+          let seekTime = player.getCurrentTime();
+          socket.emit("seek", seekTime);
+        }
+      }
+    }
+    lastTime = player.getCurrentTime();
+    setTimeout(checkPlayerTime, interval); /// repeat function call in 1 second
+  };
+  setTimeout(checkPlayerTime, interval); /// initial call delayed
 }
 
 // 5. The API calls this function when the player's state changes.
@@ -127,28 +155,27 @@ function onPlayerReady(event) {
 //    the player should play for six seconds and then stop.
 var done = false;
 function onPlayerStateChange(event) {
-  //Catch a played video 1
+
+
+  //Detect a played video on client side
   if (event.data == YT.PlayerState.PLAYING) {
     let playState = event.data;
     socket.emit("play", playState);
   }
 
-  //Catch a paused video 2
+  //Detect a paused video on client side
   if (event.data == YT.PlayerState.PAUSED) {
     let playState = event.data;
     socket.emit("pause", playState);
   }
 
-  //Catch a paused video
+  //Detect a buffering video on client side
 
-  socket.on("pause", (state) => {
-    player.pauseVideo();
-  });
+  // if (event.data == YT.PlayerState.BUFFERING && player.getCurrentTime() >= 5) {
+  //   let playState = event.data;
+  //   socket.emit("buffering", playState);
+  // }
 
-  //Catch a played video
-  socket.on("play", (state) => {
-    player.playVideo();
-  });
 }
 function stopVideo() {
   player.stopVideo();
@@ -162,9 +189,33 @@ function watchClick() {
   socket.emit("newVideo", newUrl);
 }
 
-//Catch new video and play it for all users
 
-socket.on("newVideo", (newUrl) => {
-  let newId = newUrl.split("=");
-  player.loadVideoById(newId[1], 0, "large");
-});
+  //Catch a seek on the server side
+
+  socket.on("seek", (seekTime) => {
+    player.seekTo(seekTime);
+  });
+
+  //Catch a paused video on server side
+
+  socket.on("pause", (state) => {
+    player.pauseVideo();
+  });
+
+  //Catch a played video on server side
+  socket.on("play", (state) => {
+    player.playVideo();
+  });
+
+  // // Catch a buffering video on server side
+  // socket.on("buffering", (state) => {
+  //   player.pauseVideo();
+  // });
+
+  //Catch new video and play it for all users
+
+  socket.on("newVideo", (newUrl) => {
+    let newId = newUrl.split("=");
+    player.loadVideoById(newId[1], 0, "large");
+    player.videoId = newId[1];
+  });
