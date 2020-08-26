@@ -10,7 +10,9 @@
   "author": "Ryan Haraki",
   "license": "ISC",
   "dependencies": {
+    "@joeattardi/emoji-button": "^4.0.4",
     "ejs": "^3.1.5",
+    "emoji-button": "^2.2.2",
     "express": "^4.17.1",
     "moment": "^2.27.0",
     "socket.io": "^2.3.0"

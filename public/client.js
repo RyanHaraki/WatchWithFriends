@@ -9,6 +9,8 @@ const urlInfo = document.getElementById("urlInfo");
 const watchButton = document.getElementById("watch");
 const urlPaste = document.getElementById("paste");
 let newUrl = "";
+let PAUSE_EVT_STACK = 0;
+
 //get username and room from URL
 const { username, roomid } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
@@ -93,7 +95,7 @@ function copyUrl() {
   /* Select the text field */
   urlInfo.select();
   urlInfo.setSelectionRange(0, 99999); /*For mobile devices*/
-
+  document.getElementById('button-addon2').innerText = "Copied!"
   /* Copy the text inside the text field */
   document.execCommand("copy");
 }
@@ -155,19 +157,19 @@ function onPlayerReady(event) {
 //    the player should play for six seconds and then stop.
 var done = false;
 function onPlayerStateChange(event) {
-
-
   //Detect a played video on client side
   if (event.data == YT.PlayerState.PLAYING) {
     let playState = event.data;
     socket.emit("play", playState);
   }
-
   //Detect a paused video on client side
-  if (event.data == YT.PlayerState.PAUSED) {
-    let playState = event.data;
-    socket.emit("pause", playState);
-  }
+  setTimeout(function () {
+    if (event.target.getPlayerState() == 2) {
+      // execute your code here for paused state
+      let playState = event.data;
+      socket.emit("pause", playState);
+    }
+  }, 500);
 
   //Detect a buffering video on client side
 
@@ -175,7 +177,6 @@ function onPlayerStateChange(event) {
   //   let playState = event.data;
   //   socket.emit("buffering", playState);
   // }
-
 }
 function stopVideo() {
   player.stopVideo();
@@ -185,37 +186,40 @@ function stopVideo() {
 function watchClick() {
   newUrl = urlPaste.value;
   urlPaste.value = "";
+  currentId = player.videoId;
+
   //Emit new video URL to server
   socket.emit("newVideo", newUrl);
 }
 
+//Catch a seek on the server side
 
-  //Catch a seek on the server side
+socket.on("seek", (seekTime) => {
+  player.seekTo(seekTime);
+});
 
-  socket.on("seek", (seekTime) => {
-    player.seekTo(seekTime);
-  });
+//Catch a paused video on server side
 
-  //Catch a paused video on server side
+socket.on("pause", (state) => {
+  player.pauseVideo();
+});
 
-  socket.on("pause", (state) => {
-    player.pauseVideo();
-  });
+//Catch a played video on server side
+socket.on("play", (state) => {
+  player.playVideo();
+});
 
-  //Catch a played video on server side
-  socket.on("play", (state) => {
-    player.playVideo();
-  });
+// // Catch a buffering video on server side
+// socket.on("buffering", (state) => {
+//   player.pauseVideo();
+// });
 
-  // // Catch a buffering video on server side
-  // socket.on("buffering", (state) => {
-  //   player.pauseVideo();
-  // });
+//Catch new video and play it for all users
 
-  //Catch new video and play it for all users
+socket.on("newVideo", (newUrl) => {
+  let newId = newUrl.split("=");
+  player.loadVideoById(newId[1], 0, "large");
+  player.videoId = newId[1];
+  console.log(player.videoId)
+});
 
-  socket.on("newVideo", (newUrl) => {
-    let newId = newUrl.split("=");
-    player.loadVideoById(newId[1], 0, "large");
-    player.videoId = newId[1];
-  });

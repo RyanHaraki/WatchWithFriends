@@ -91,11 +91,15 @@ body {
 
 #mario-chat {
   max-width: 500px;
-  margin: 105px auto;
   border: 1px solid #ddd;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
   border-radius: 2px;
 }
+
+#chat-holder {
+  margin: 11vh 3vh;
+}
+
 
 #chat-window {
   height: 50vh;
@@ -164,14 +168,11 @@ body {
 }
 
 .leave {
-  width: 100%;
   background: #575ed8;
-  color: #fff;
   font-size: 18px;
-  border: 0;
-  padding: 12px 0;
   width: 100%;
-  border-radius: 0 0 2px 2px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /* about section  */
@@ -193,6 +194,10 @@ body {
 }
 
 @media only screen and (max-width: 764px) {
+  .footer {
+    height: 30vh;
+  }
+
   .section {
     height: 1300px;
   }
