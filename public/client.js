@@ -164,8 +164,7 @@ function onPlayerReady(event) {
 }
 
 // 5. The API calls this function when the player's state changes.
-//    The function indicates that when playing a video (state=1),
-//    the player should play for six seconds and then stop.
+
 var done = false;
 function onPlayerStateChange(event) {
   //Detect a played video on client side
@@ -173,6 +172,7 @@ function onPlayerStateChange(event) {
     let playState = event.data;
     socket.emit("play", playState);
   }
+  
   //Detect a paused video on client side
   setTimeout(function () {
     if (event.target.getPlayerState() == 2) {

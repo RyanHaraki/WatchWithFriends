@@ -3,6 +3,7 @@ body {
   font-weight: 400;
 }
 
+
 /* navbar   */
 
 .nav-link {
@@ -46,16 +47,6 @@ body {
   text-align: center;
   margin-bottom: 4%;
 }
-/* info section */
-
-.info {
-  height: 50vh;
-  font-family: "Roboto", sans-serif;
-}
-
-#welcome-room {
-  font-weight: 600;
-}
 
 /* footer  */
 
@@ -87,6 +78,11 @@ body {
 }
 
 /* room page  */
+
+
+#chat-form {
+  width: 100%;
+}
 
 #name {
   color: #575ed8;
@@ -186,6 +182,18 @@ body {
   margin-bottom: 0;
 }
 
+/* info section */
+
+.info {
+  height: 50vh;
+  font-family: "Roboto", sans-serif;
+}
+
+#welcome-room {
+  font-weight: 600;
+}
+
+
 /* about section  */
 
 .about {
@@ -215,8 +223,25 @@ body {
 }
 
 @media only screen and (max-width: 764px) {
+
+  
+#chat-form {
+  width: 100%;
+}
+  #roomBasic {
+    margin: 0;
+    margin-top: 3%;
+    margin-bottom: 3%;
+  }
+
   .footer {
     height: 30vh;
+  }
+
+  #player {
+    width: 95%;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .about {
@@ -225,9 +250,13 @@ body {
     padding: 10px;
   }
   
-
   .section {
     height: 1300px;
+  }
+
+  .main-section {
+    padding: 0;
+    margin-bottom: 0;
   }
 
   #leave {
@@ -235,19 +264,10 @@ body {
   }
 
   #mario-chat {
-    margin: 0;
+    margin-right: 0 !important;
+    width: 100%;
   }
 
-  #chat-window {
-    width: 100vh;
-  }
-
-  #send {
-    width: 100vh;
-  }
-  #mario-chat input {
-    width: 100vh;
-  }
   #video {
     width: 764px;
     margin: 0;

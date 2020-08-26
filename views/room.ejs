@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <!-- Description -->
+  
+    <!-- Description -->
     <meta name="description" content="Watch Youtube videos live with your friends, easily, for free!">
     <!-- Favicon  -->
 <link rel="icon" href="/img/favicon.ico">
@@ -45,13 +46,14 @@
       </nav>
 
 <div class="section">
+  <div class="container-fluid">
   <div class="row">
-    <div class="col-md-8 main-section">
+    <div class="col-lg-8 col-md-7 col-sm-12 main-section">
       <h1 id="roomBasic"><span id="name"></span><span id="users"></span></h1>
           <div id="player"></div>
 
     </div>
-    <div class="col-md-4">
+    <div class="col-lg-4 col-md-5 col-sm-12">
       <div id="chat-holder">
       <div id="mario-chat">
         <a id="leave" href="/" class="btn btn-primary btn-block btn-lg leave">Leave Room</a>
@@ -60,6 +62,7 @@
           <div id="feedback"></div>
         </div>
         <form action="" id="chat-form">
+          
           <input
             type="text"
             id="message"
@@ -68,14 +71,18 @@
             autocomplete="off"
             class="form-control form-control-lg"
           />
+          <a href="">
           <button class="btn btn-black btn-block" id="send" onclick="reload()">Send</button>
+        </a>
         </form>
       </div>
     </div>
     </div>
   </div>
 </div>
+</div>
 <div class="info">
+  <div class="container-fluid">
   <div class="row">
     <div class="col-md-8">
       <h3 id="welcome-room">Welcome to your room!</h3>
@@ -98,6 +105,7 @@
 
 
   </div>
+</div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
