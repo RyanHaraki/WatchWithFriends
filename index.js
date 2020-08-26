@@ -1,4 +1,6 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const nodemailer = require("nodemailer");
 const ejs = require("ejs");
 const http = require("http");
 const socket = require("socket.io");
@@ -6,6 +8,8 @@ const { urlencoded } = require("express");
 const formatMessage = require(__dirname + "/public/messages.js");
 const { userJoin, getCurrentUser, userLeft, getRoomUsers } = require(__dirname +
   "/public/users.js");
+  require('dotenv').config()
+
 
 //sets up http, express, socket.io & bodyParser
 const app = express();
@@ -13,6 +17,14 @@ const server = http.createServer(app);
 const io = socket(server);
 const botName = "FriendlyBot";
 
+//Set up bodyparser
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    // to support URL-encoded bodies
+    extended: true,
+  })
+);
 //Handles the rooms and socket connections.
 io.on("connection", (socket) => {
   socket.on("joinRoom", ({ username, roomid }) => {
@@ -174,6 +186,40 @@ app.get("/about", (req, res) => {
 
 app.get("/contact", (req, res) => {
   res.render("contact");
+});
+
+app.post("/contact", (req, res) => {
+  const name = req.body.contactName;
+  const email = req.body.contactEmail;
+  const message = req.body.contactMessage;
+  const hostEmail = process.env.HOST_EMAIL
+  const hostPass = process.env.HOST_PASS
+  var transporter = nodemailer.createTransport({
+    service: 'Hotmail',
+    auth: {
+      user: hostEmail,
+      pass: hostPass
+    }
+  });
+  
+  var mailOptions = {
+    from: hostEmail,
+    to: hostEmail,
+    subject: `WatchWithFriends Email from ${name}`,
+    html: `
+    <p><b>Sender name:</b> ${name}</p>
+    <p><b>Sender email:</b> ${email}</p>
+    <p><b>Message contents:</b> ${message}</p>
+    `
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } 
+  });
+
+  res.redirect("/");
 });
 
 server.listen(PORT, () => console.log(`Server hosted on port ${PORT}`));

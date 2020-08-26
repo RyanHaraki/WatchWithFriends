@@ -92,12 +92,23 @@ function setRoomLink() {
 // Give user ability to copy url to clipboard
 
 function copyUrl() {
-  /* Select the text field */
+  let copyButton = document.getElementById("button-addon2");
+  /* Select the text field and copy */
   urlInfo.select();
   urlInfo.setSelectionRange(0, 99999); /*For mobile devices*/
-  document.getElementById('button-addon2').innerText = "Copied!"
+  // Change properties to copied
+  copyButton.innerText = "Copied!";
+  copyButton.classList.remove("btn-outline-dark");
+  copyButton.classList.add("btn-outline-green");
   /* Copy the text inside the text field */
+
+  // After 5 seconds return button to original state
   document.execCommand("copy");
+  setTimeout(() => {
+    copyButton.innerText = "Copy";
+    copyButton.classList.remove("btn-outline-green");
+    copyButton.classList.add("btn-outline-dark");
+  }, 5000);
 }
 
 //Youtube player
@@ -220,6 +231,5 @@ socket.on("newVideo", (newUrl) => {
   let newId = newUrl.split("=");
   player.loadVideoById(newId[1], 0, "large");
   player.videoId = newId[1];
-  console.log(player.videoId)
+  console.log(player.videoId);
 });
-

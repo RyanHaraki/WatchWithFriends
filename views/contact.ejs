@@ -1,3 +1,17 @@
 <%- include('partials/header') %>
-<h1>Contact Me</h1>
+<div class="contact-section container">
+    <form class="border border-light p-5" method="POST">
+
+        <p class="h4 mb-4 text-center">Contact The Creator</p>
+    
+    
+        <input type="text" name="contactName" id="contactName" class="form-control mb-4" placeholder="Name">
+    
+        <input type="email" name="contactEmail" id="contactEmail" class="form-control mb-4" placeholder="E-mail">
+    
+        <textarea class="form-control rounded-0" name="contactMessage" id="contactMessage" rows="3" placeholder="Message"></textarea>
+    
+        <button class="btn btn-info btn-block" type="submit">Send</button>
+    </form>
+</div>
 <%- include('partials/footer') %>
