@@ -17,6 +17,7 @@ Clone repository and install dependencies
 ```
 git clone git@github.com:RyanHaraki/WatchWithFriends.git
 cd /folder
+npm init
 npm install
 ```
 Start a server
